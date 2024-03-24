@@ -50,7 +50,8 @@
             wantedBy = [ "default.target" ];
             serviceConfig = {
               Type = "simple";
-              ExecStart = "/bin/sh -c ${config.homeManagerConfiguration.scripts.change-wallpaper.sh.text}";
+               ExecStart = "";
+           #   ExecStart = "/bin/sh -c ${config.homeManagerConfiguration.scripts.change-wallpaper.sh.text}";
               Restart = "on-failure";
             };
           };
