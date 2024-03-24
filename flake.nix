@@ -1,3 +1,4 @@
+{pkgs, lib, config, ...}:}
 {
   description = "Manage KDE Plasma with Home Manager";
 
