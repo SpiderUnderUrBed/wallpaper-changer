@@ -11,6 +11,10 @@
 
   outputs = inputs@{ self, ... }:
     let
+      pkgs = inputs.nixpkgs;          # Accessing nixpkgs via inputs
+      lib = pkgs.lib;                 # Accessing lib from nixpkgs
+      config = {};                    # Initialize an empty config
+
       # Systems that can run tests:
       supportedSystems = [
         "aarch64-linux"
