@@ -29,7 +29,6 @@ in
     home.activation.change-wallpapers = (lib.hm.dag.entryAfter [ "writeBoundary" ]
       ''
        $DRY_RUN_CMD ${script}
-      '';
-     );
+      '');
   };
 }
