@@ -25,7 +25,7 @@ in
        description = "The folder containing wallpapers for the wallpaper changer program.";
        default = "/path/to/wallpapers";  # Replace with the default folder path
     };
-      config = lib.mkIf plasmaCfg.enable {
+      config = lib.mkIf cfg.enable {
     home.activation.change-wallpapers = (lib.hm.dag.entryAfter [ "writeBoundary" ]
       ''
        $DRY_RUN_CMD ${script}
