@@ -1,5 +1,5 @@
 { config, lib, ... }:
-let cfg = config.programs.plasma
+let cfg = config.programs.plasma;
   startupScriptType = lib.types.submodule {
     options = {
       text = lib.mkOption {
