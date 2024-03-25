@@ -29,10 +29,11 @@
 
       # Attribute set of nixpkgs for each system:
       nixpkgsFor = forAllSystems (system:
-        import inputs.nixpkgs { inherit system; });
-
+        import inputs.nixpkgs { inherit system; }); 
+        in 
+      {
       # Function to create wallpaper-changer module for specified folder:
-      wallpaperChanger = folder: { ... }: {
+      homeManagerModules.wallpaper-changer = folder: { ... }: {
         imports = [ ./modules ];
         config = {
           homeManagerConfiguration = {
@@ -60,6 +61,7 @@
            #   ExecStart = "/bin/sh -c ${config.homeManagerConfiguration.scripts.change-wallpaper.sh.text}";
               Restart = "on-failure";
             };
+          };
           };
         };
       };
