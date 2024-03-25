@@ -1,6 +1,5 @@
-#{ pkgs, lib, config, ...}:
 {
-  description = "Manage KDE Plasma with Home Manager";
+  description = "Lets users automatically change wallpapers";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
@@ -8,15 +7,9 @@
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
-#  options = {
 
-#  };
   outputs = inputs@{ self, ... }:
     let
-      pkgs = inputs.nixpkgs;          # Accessing nixpkgs via inputs
-      lib = pkgs.lib;                 # Accessing lib from nixpkgs
-      config = {};                    # Initialize an empty config
-
       # Systems that can run tests:
       supportedSystems = [
         "aarch64-linux"
@@ -30,41 +23,50 @@
       # Attribute set of nixpkgs for each system:
       nixpkgsFor = forAllSystems (system:
         import inputs.nixpkgs { inherit system; });
-
-      # Rest of the configuration within the 'in' block
-    in 
+    in
     {
-      # Function to create wallpaper-changer module for specified folder:
-      homeManagerModules.wallpaper-changer = folder: { ... }: {
+      homeManagerModules.wallpaper-changer = { ... }: {
         imports = [ ./modules ];
-        config = {
-          homeManagerConfiguration = {
-            scripts = {
-              "change-wallpaper.sh" = {
-                text = ''
-                  #!/bin/sh
-                  while true; do
-                    # Command to change wallpaper
-                    # For example, using feh to change wallpaper:
-                    feh --bg-fill "${folder}"
-                    sleep 60  # Change wallpaper every minute (60 seconds)
-                  done
-                '';
-                executable = true;
-              };
-            };
-          };
-          systemd.user.services.change-wallpaper = {
-            description = "Change wallpaper every minute";
-            wantedBy = [ "default.target" ];
-            serviceConfig = {
-              Type = "simple";
-               ExecStart = "";
-           #   ExecStart = "/bin/sh -c ${config.homeManagerConfiguration.scripts.change-wallpaper.sh.text}";
-              Restart = "on-failure";
-            };
-          };
-        };
       };
+
+      packages = forAllSystems (system:
+        let pkgs = nixpkgsFor.${system}; in
+        {
+          default = self.packages.${system}.rc2nix;
+
+          demo = (inputs.nixpkgs.lib.nixosSystem {
+            inherit system;
+            modules = [
+              (import test/demo.nix {
+                home-manager-module = inputs.home-manager.nixosModules.home-manager;
+                wallpaper-changer = self.homeManagerModules.wallpaper-changer;
+              })
+              (_: {environment.systemPackages = [ self.packages.${system}.rc2nix]; })
+            ];
+          }).config.system.build.vm;
+
+         
+        });
+
+      apps = forAllSystems (system: {
+        default = self.apps.${system}.rc2nix;
+
+      });
+
+      checks = forAllSystems (system:
+        {
+          default = nixpkgsFor.${system}.callPackage ./test/basic.nix {
+            home-manager-module = inputs.home-manager.nixosModules.home-manager;
+            plasma-module = self.homeManagerModules.wallpaper-changer;
+          };
+        });
+
+      devShells = forAllSystems (system: {
+        default = nixpkgsFor.${system}.mkShell {
+          buildInputs = with nixpkgsFor.${system}; [
+
+          ];
+        };
+      });
     };
 }
