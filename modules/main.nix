@@ -1,8 +1,10 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.programs.plasma;
-  startupScriptType = lib.types.submodule {
+  script = pkgs.writeScript "plasma-config";
+
+ startupScriptType = lib.types.submodule {
     options = {
       text = lib.mkOption {
         type = lib.types.str;
@@ -15,6 +17,7 @@ let
       };
     };
   };
+
 in
 {
    options.programs.wallpaper-changer.folder = lib.mkOption {
@@ -23,9 +26,10 @@ in
        default = "/path/to/wallpapers";  # Replace with the default folder path
     };
       config = lib.mkIf plasmaCfg.enable {
-    home.activation.configure-plasma = (lib.hm.dag.entryAfter [ "writeBoundary" ]
+    home.activation.change-wallpapers = (lib.hm.dag.entryAfter [ "writeBoundary" ]
       ''
-      ''
+       $DRY_RUN_CMD ${script}
+      '';
      );
   };
 }
