@@ -1,5 +1,7 @@
 { config, lib, ... }:
-let cfg = config.programs.plasma;
+
+let
+  cfg = config.programs.plasma;
   startupScriptType = lib.types.submodule {
     options = {
       text = lib.mkOption {
@@ -17,9 +19,9 @@ in
 {
   options.programs.wallpaper-changer.startup = {
     folder = lib.mkOption {
-       type = lib.types.int;
-        description = "The priority for the execution of the script. Lower priority means earlier execution.";
-        default = 0;
+       type = lib.types.str;
+       description = "The folder containing wallpapers for the wallpaper changer program.";
+       default = "/path/to/wallpapers";  # Replace with the default folder path
     };
   };
 }
