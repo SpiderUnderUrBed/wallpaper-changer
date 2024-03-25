@@ -15,7 +15,7 @@ let cfg = config.programs.plasma;
   };
 in
 {
-  options.programs.plasma.startup = {
+  options.programs.wallpaper-changer.startup = {
     folder = lib.mkOption {
        type = lib.types.int;
         description = "The priority for the execution of the script. Lower priority means earlier execution.";
