@@ -22,7 +22,10 @@ in
        description = "The folder containing wallpapers for the wallpaper changer program.";
        default = "/path/to/wallpapers";  # Replace with the default folder path
     };
-  options.programs.wallpaper-changer.startup = {
-  
+      config = lib.mkIf plasmaCfg.enable {
+    home.activation.configure-plasma = (lib.hm.dag.entryAfter [ "writeBoundary" ]
+      ''
+      ''
+     );
   };
 }
