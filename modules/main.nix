@@ -2,7 +2,9 @@
 
 let
   cfg = config.programs.plasma;
-  script = pkgs.writeScript "plasma-config";
+  script = pkgs.writeScript "wallpaper-changer" '' 
+  echo "test" 
+  '';
 
  startupScriptType = lib.types.submodule {
     options = {
