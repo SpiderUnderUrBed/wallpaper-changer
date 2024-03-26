@@ -2,15 +2,11 @@
 
 let
   cfg = config.programs.plasma;
-  script = pkgs.writeScript "wallpaper-changer" '' 
-   echo "starting wallpaper-changer!"
-    # node ./kwin.js "$(builtins.toJSON cfg)"
-  '';
-#pkgs.writeShellApplication {
- #           name = "kwin";
-  #          runtimeInputs = with pkgs; [ nodejs ];
-  #          text = ''node ./kwin.js "$@"'';
-  #};
+  script = pkgs.writeShellApplication {
+           name = "kwin";
+            runtimeInputs = with pkgs; [ nodejs ];
+            text = ''node ./kwin.js "$@"'';
+  };
 
 # startupScriptType = lib.types.submodule {
 #    options = {
