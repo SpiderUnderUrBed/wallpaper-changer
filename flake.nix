@@ -57,7 +57,7 @@
       apps = forAllSystems (system: {
         default = self.apps.${system}.rc2nix;
  
-        node=runtime = {
+        node-runtime = {
           type = "app";
           program = "${self.packages.${system}.node-runtime}/bin/node-runtime";
         };
