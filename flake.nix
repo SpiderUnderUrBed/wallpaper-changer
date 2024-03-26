@@ -64,7 +64,7 @@
       devShells = forAllSystems (system: {
         default = nixpkgsFor.${system}.mkShell {
           buildInputs = with nixpkgsFor.${system}; [
-
+            nodejs
           ];
         };
       });
