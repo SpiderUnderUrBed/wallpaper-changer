@@ -3,22 +3,22 @@
 let
   cfg = config.programs.plasma;
   script = pkgs.writeScript "wallpaper-changer" '' 
-  echo "test" 
+  npm run kwin.js
   '';
 
- startupScriptType = lib.types.submodule {
-    options = {
-      text = lib.mkOption {
-        type = lib.types.str;
-        description = "The content of the startup-script.";
-      };
-      priority = lib.mkOption {
-        type = lib.types.int;
-        description = "The priority for the execution of the script. Lower priority means earlier execution.";
-        default = 0;
-      };
-    };
-  };
+# startupScriptType = lib.types.submodule {
+#    options = {
+#      text = lib.mkOption {
+#        type = lib.types.str;
+#        description = "The content of the startup-script.";
+#      };
+##      priority = lib.mkOption {
+#        type = lib.types.int;
+#        description = "The priority for the execution of the script. Lower priority means earlier execution.";
+#        default = 0;
+#      };
+#    };
+#  };
 
 in
 {
