@@ -32,24 +32,24 @@
       packages = forAllSystems (system:
         let pkgs = nixpkgsFor.${system}; in
         {
-          default = self.packages.${system}.node-runtime;
+       #   default = self.packages.${system}.node-runtime;
 
-          node-runtime = pkgs.writeShellApplication {
-            name = "node";
-            runtimeInputs = with pkgs; [ nodejs ];
-            text = ''node ./modules/kwin.js "$@"'';
-          };
+        #  node-runtime = pkgs.writeShellApplication {
+        #    name = "node";
+        #    runtimeInputs = with pkgs; [ nodejs ];
+        #    text = ''node ./modules/kwin.js "$@"'';
+        #  };
 
-          demo = (inputs.nixpkgs.lib.nixosSystem {
-            inherit system;
-            modules = [
-              (import test/demo.nix {
-                home-manager-module = inputs.home-manager.nixosModules.home-manager;
-                wallpaper-changer = self.homeManagerModules.wallpaper-changer;
-              })
-              (_: {environment.systemPackages = [ self.packages.${system}.rc2nix]; })
-            ];
-          }).config.system.build.vm;
+      #    demo = (inputs.nixpkgs.lib.nixosSystem {
+      #      inherit system;
+      #      modules = [
+     #         (import test/demo.nix {
+    #            home-manager-module = inputs.home-manager.nixosModules.home-manager;
+    #            wallpaper-changer = self.homeManagerModules.wallpaper-changer;
+    #          })
+   #           (_: {environment.systemPackages = [ self.packages.${system}.rc2nix]; })
+   #         ];
+   #       }).config.system.build.vm;
 
          
         });
@@ -57,10 +57,10 @@
       apps = forAllSystems (system: {
         default = self.apps.${system}.rc2nix;
  
-        node-runtime = {
-          type = "app";
-          program = "${self.packages.${system}.node-runtime}/bin/node-runtime";
-        };
+      #  node-runtime = {
+       #   type = "app";
+       #   program = "${self.packages.${system}.node-runtime}/bin/node-runtime";
+       # };
       });
 
       checks = forAllSystems (system:
