@@ -2,7 +2,7 @@
 
 let
   cfg = config.programs.plasma;
-  kwinScript =  builtins.readFile ./kwin.js;
+  kwinScript =  pkgs.writeText "kwin.js" (builtins.readFile ./kwin.js);
   script = pkgs.writeShellApplication {
            name = "kwin";
             runtimeInputs = [ pkgs.nodejs ];
