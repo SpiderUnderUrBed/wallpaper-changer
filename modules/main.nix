@@ -3,7 +3,7 @@
 let
   cfg = config.programs.plasma;
   script = pkgs.writeScript "wallpaper-changer" '' 
-  node ./kwin.js
+    node ./kwin.js "$(builtins.toJSON cfg)"
   '';
 
 # startupScriptType = lib.types.submodule {
