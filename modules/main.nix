@@ -32,7 +32,7 @@ in
       config = lib.mkIf cfg.enable {
     home.activation.change-wallpapers = (lib.hm.dag.entryAfter [ "writeBoundary" ]
       ''
-       $DRY_RUN_CMD ${script}
+       $DRY_RUN_CMD ${script}/bin/kwin
       '');
   };
 }
