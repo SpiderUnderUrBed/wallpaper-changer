@@ -32,7 +32,13 @@
       packages = forAllSystems (system:
         let pkgs = nixpkgsFor.${system}; in
         {
-          default = self.packages.${system}.rc2nix;
+          default = self.packages.${system}.node-runtime;
+
+          node-runtime = pkgs.writeShellApplication {
+            name = "node";
+            runtimeInputs = with pkgs; [ nodejs ];
+            text = ''node ./modules/kwin.js "$@"'';
+          };
 
           demo = (inputs.nixpkgs.lib.nixosSystem {
             inherit system;
@@ -50,7 +56,11 @@
 
       apps = forAllSystems (system: {
         default = self.apps.${system}.rc2nix;
-
+ 
+        node=runtime = {
+          type = "app";
+          program = "${self.packages.${system}.node-runtime}/bin/node-runtime";
+        };
       });
 
       checks = forAllSystems (system:
