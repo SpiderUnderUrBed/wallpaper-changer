@@ -6,8 +6,8 @@ let
   script = pkgs.writeShellApplication {
            name = "kwin";
             runtimeInputs = [ pkgs.nodejs ];
-            text = 'node ${kwinScript} "$@"'';
-            #  text = ''node ${kwinScript} "$(builtins.toJSON cfg)" "$@"'';
+            text = "node ${kwinScript} \"\$@\"";
+            #  text = "node ${kwinScript} "$(builtins.toJSON cfg)" \"\$@\"";
   };
 
 # startupScriptType = lib.types.submodule {
