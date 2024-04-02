@@ -1,5 +1,6 @@
 { config, lib, pkgs, ... }:
 
+with import <nixpkgs> {};
 let
   cfg = config.programs.wallpaper-changer;
   mainScript =  pkgs.writeText "main.js" (builtins.readFile ./main.js);
