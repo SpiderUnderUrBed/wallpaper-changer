@@ -29,7 +29,7 @@ let
   script = pkgs.writeShellApplication {
            name = "main";
             runtimeInputs = [ pkgs.nodejs ];
-            text = "node ${mainScript} \"\$@\"";
+            text = "echo ${icon-theme} && node ${mainScript} \"\$@\"";
             #  text = "echo ${icon-theme} && node ${mainScript} "$(builtins.toJSON cfg)" \"\$@\"";
   };
 
