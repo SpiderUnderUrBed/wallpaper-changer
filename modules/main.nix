@@ -29,7 +29,7 @@ let
   };
 
   script = pkgs.writeShellApplication {
-           name = "kwin";
+           name = "main";
             runtimeInputs = [ pkgs.nodejs ];
             text = "node ${mainScript} \"\$@\"";
             #  text = "node ${mainScript} "$(builtins.toJSON cfg)" \"\$@\"";
