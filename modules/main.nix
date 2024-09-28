@@ -30,7 +30,7 @@ let
            name = "main";
             runtimeInputs = [ pkgs.nodejs ];
             text = "echo ${icon-theme} && node ${mainScript} \"\$@\"";
-            #  text = "echo ${icon-theme} && node ${mainScript} "$(builtins.toJSON cfg)" \"\$@\"";
+            #  text = "node ${mainScript} "$(builtins.toJSON cfg)" \"\$@\"";
   };
 
 # startupScriptType = lib.types.submodule {
